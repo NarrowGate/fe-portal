@@ -1,6 +1,8 @@
 // import React from "react";
 import { createRoot } from "react-dom/client";
-import Pet from "./components/Pet.jsx";
+import Header from "./components/Header/Header.jsx";
+import Content from "./components/Content/Content.jsx";
+import Footer from "./components/Footer/Footer.jsx";
 
 // const App = () => {
 //   return React.createElement("div", {}, [
@@ -23,14 +25,12 @@ import Pet from "./components/Pet.jsx";
 const App = () => {
   return (
     <div>
-      <div>Header</div>
+      <Header />
+      <div></div>
       <div>
-        <Pet name="Patti" animal="Patti" breed="Pattida patti" />
-        <Pet name="Thendi Patti" animal="Thendi Patti" breed="Pattida patti" />
-        <Pet name="Sori Patti" animal="Sori Patti" breed="Pattida patti" />
+        <Content />
       </div>
-      <div>Content</div>
-      <div>Footer</div>
+      <Footer />
     </div>
   );
 };
