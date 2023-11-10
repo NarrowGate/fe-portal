@@ -1,3 +1,6 @@
 .footerWrap {
   border: red 1px solid;
+  background: lightblue;
+  height: 64px;
+  width: 100%;
 }
