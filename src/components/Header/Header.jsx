@@ -1,24 +1,56 @@
 import styles from "./Header.module.css";
 import sites from "../../data/sites";
-import { useState } from "react";
+import { useReducer } from "react";
+
+const initialState = {
+  currentSite: null,
+  currentOperation: null,
+  allOperations: null,
+};
+
+const reducer = (state, action) => {
+  if (action.type === "SET_CURRENT_SITE") {
+    let site = action.payload ? action.payload : null;
+    return {
+      ...state,
+      currentSite: site,
+    };
+  }
+
+  if (action.type === "SET_ALL_OPERATIONS") {
+    let operations = action.payload ? action.payload.operations : null;
+    return {
+      ...state,
+      allOperations: operations,
+    };
+  }
+
+  if (action.type === "SET_CURRENT_OPERATION") {
+    let operation = action.payload;
+    return {
+      ...state,
+      currentOperation: operation,
+    };
+  }
+
+  return { state, action };
+};
 
 const Header = () => {
-  let [currentSite, setCurrentSite] = useState(null);
-  let [currentOperation, setCurrentOperation] = useState(null);
-  let [allOperations, setAllOperations] = useState(null);
+  let [state, dispatch] = useReducer(reducer, initialState);
 
   let changeSite = (e) => {
-    setCurrentSite(e.target.value);
     let site = sites.find((site) => {
       return +site.id === +e.target.value;
     });
-    setCurrentSite(site ? site : null);
-    setAllOperations(site && site.operations ? site.operations : null);
+    dispatch({ type: "SET_CURRENT_SITE", payload: site });
+    dispatch({ type: "SET_ALL_OPERATIONS", payload: site });
   };
 
   let changeOperation = (e) => {
-    setCurrentOperation(e.target.value);
+    dispatch({ type: "SET_CURRENT_OPERATION", payload: e.target.value });
   };
+
   return (
     <div className={styles.headerWrap}>
       <div className={styles.item}>
@@ -35,19 +67,19 @@ const Header = () => {
       </div>
       <div className={styles.item}>
         Site:
-        {currentSite ? (
-          <div>Site: {currentSite.displayName}</div>
+        {state.currentSite ? (
+          <div>Site: {state.currentSite.displayName}</div>
         ) : (
           <div>Site not selected</div>
         )}
         Header
       </div>
 
-      {allOperations ? (
+      {state.allOperations ? (
         <div className={styles.item}>
           <select onClick={changeOperation}>
             <option>Select Operations</option>
-            {allOperations.map((operation) => {
+            {state.allOperations.map((operation) => {
               return (
                 <option key={operation.id} value={operation.id}>
                   {operation.displayName}
