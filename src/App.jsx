@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import Header from "./components/Header/Header.jsx";
 import Content from "./components/Content/Content.jsx";
 import Footer from "./components/Footer/Footer.jsx";
+import { SiteProvider } from "./contexts/site.jsx";
 
 // const App = () => {
 //   return React.createElement("div", {}, [
@@ -25,7 +26,9 @@ import Footer from "./components/Footer/Footer.jsx";
 const App = () => {
   return (
     <div>
-      <Header />
+      <SiteProvider>
+        <Header />
+      </SiteProvider>
       <div></div>
       <div>
         <Content />
